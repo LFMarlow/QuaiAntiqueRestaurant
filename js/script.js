@@ -91,16 +91,11 @@ function eraseCookie(name)
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
-function isConnected()
-{
-    if(getToken() == null || getToken == undefined)
-    {
-        return false;
-    }
-    else{
-        return true;
-    }
+// Fonction pour vérifier si l'utilisateur est connecté
+function isConnected() {
+    return getCookie('role') !== null; // Remplacez 'accesstoken' par le nom de votre cookie de connexion
 }
+
 
 function sanitizeHtml(text){
     // Créez un élément HTML temporaire de type "div"

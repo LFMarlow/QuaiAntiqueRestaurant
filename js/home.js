@@ -1,14 +1,3 @@
-// Reservation form submission handler
-document.getElementById("reservationForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const guests = document.getElementById("guests").value;
-    const date = document.getElementById("date").value;
-    const time = document.getElementById("time").value;
-  //  const allergies = document.getElementById("allergies").value;
-  
-    alert(`Réservation confirmée pour ${guests} personnes le ${date} à ${time}.`);
-  });
-  
   // Dynamic Dishes (Menu)
   const dishes = [
     { 

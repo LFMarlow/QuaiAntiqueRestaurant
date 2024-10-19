@@ -170,6 +170,22 @@ p{
     padding-bottom: 50px; /* Ajoute un espace en bas avant le footer */
   }
   
+  .reservation-list {
+    margin-top: 30px;
+}
+.reservation-item {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.reservation-item h5 {
+    margin-bottom: 10px;
+}
+.reservation-item p {
+    margin: 0;
+}
+
 /* Responsive : Ajustement pour les petits écrans */
 @media (max-width: 768px) {
     .book {
