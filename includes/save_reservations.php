@@ -8,9 +8,10 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// Récupérer l'ID de l'utilisateur depuis la session
+$user_id = $_SESSION['user_id'];
+
 // Récupérer les données POST envoyées via la requête AJAX
-$nom = $_POST['Nom'];
-$prenom = $_POST['Prenom'];
 $allergies = $_POST['Allergies'];
 $nombre_de_convives = $_POST['NbConvives'];
 $date_reservation = $_POST['Date'];
@@ -18,11 +19,11 @@ $heure_reservation = $_POST['Heure'];
 $serviceChoisi = isset($_POST['serviceChoisi']) && $_POST['serviceChoisi'] === 'midi' ? 'midi' : 'soir';
 
 // Préparer la requête SQL pour insérer les informations de réservation
-$sql = "INSERT INTO reservations (nombre_de_couverts, date_reservation, heure_reservation, nom, prenom, allergies)
-        VALUES (?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO reservations (user_id, nombre_de_couverts, date_reservation, heure_reservation, allergies)
+        VALUES (?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("isssss", $nombre_de_convives, $date_reservation, $heure_reservation, $nom, $prenom, $allergies);
+$stmt->bind_param("iisss", $user_id, $nombre_de_convives, $date_reservation, $heure_reservation, $allergies);
 
 if ($stmt->execute()) {
     echo json_encode(['status' => 'success', 'message' => 'Réservation enregistrée avec succès']);

@@ -2,7 +2,11 @@
 include 'db.php'; // Inclure la connexion à la base de données
 
 // Préparer et exécuter la requête SQL pour récupérer toutes les réservations
-$sql = "SELECT nombre_de_couverts, date_reservation, heure_reservation, nom, prenom, allergies FROM reservations ORDER BY date_reservation DESC";
+$sql = "SELECT reservations.nombre_de_couverts, reservations.date_reservation, reservations.heure_reservation, utilisateurs.nom, utilisateurs.prenom, reservations.allergies 
+        FROM reservations 
+        JOIN utilisateurs ON reservations.user_id = utilisateurs.id 
+        ORDER BY reservations.date_reservation DESC";
+
 $result = $conn->query($sql);
 
 $reservations = array();

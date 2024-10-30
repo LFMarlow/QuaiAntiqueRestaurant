@@ -20,7 +20,7 @@ if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
     
     // Vérifier le mot de passe avec password_verify
-    if ($password === $user['password']) {
+    if (password_verify($password, $user['password'])) {
         // Connexion réussie
         $_SESSION['user_id'] = $user['id'];  // Stocker l'ID de l'utilisateur en session
         $_SESSION['role'] = $user['role'];   // Stocker le rôle de l'utilisateur
@@ -43,3 +43,4 @@ if ($result->num_rows > 0) {
 $stmt->close();
 $conn->close();
 ?>
+
