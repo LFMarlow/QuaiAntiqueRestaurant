@@ -1,6 +1,10 @@
-// Fonction pour récupérer les menus via PHP et les afficher
 fetch('/includes/get_menus.php')
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Erreur réseau lors de la récupération des menus');
+    }
+    return response.json();
+  })
   .then(data => {
     const menuLeft = document.getElementById('menu-left');
     const menuRightPlats = document.getElementById('menu-right-plats');
@@ -8,9 +12,23 @@ fetch('/includes/get_menus.php')
 
     data.forEach(item => {
       const menuItem = document.createElement('div');
-      menuItem.innerHTML = `<h3>${item.title}</h3><p>${item.description} - <strong>${item.price}€</strong></p>`;
 
-      // Séparer les menus par catégorie
+      // Crée des éléments séparés pour éviter les risques XSS
+      const title = document.createElement('h3');
+      title.textContent = item.title;
+
+      const description = document.createElement('p');
+      description.textContent = `${item.description} - `;
+
+      const price = document.createElement('strong');
+      price.textContent = `${item.price}€`;
+
+      // Ajoute les éléments au conteneur
+      description.appendChild(price);
+      menuItem.appendChild(title);
+      menuItem.appendChild(description);
+
+      // Sépare les menus par catégorie
       if (item.category === 'entrees') {
         menuLeft.appendChild(menuItem);
       } else if (item.category === 'plats') {
@@ -20,6 +38,7 @@ fetch('/includes/get_menus.php')
       }
     });
   })
-  .catch(error => console.error('Erreur lors du chargement des menus:', error));
-
-  
+  .catch(error => {
+    console.error('Erreur lors du chargement des menus:', error);
+    alert("Une erreur s'est produite lors du chargement des menus.");
+  });
